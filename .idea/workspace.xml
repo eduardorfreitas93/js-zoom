@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4426bf89-2f0a-4f9f-90db-a56be11ce0ab" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/aula01/public/pages/room/src/util/peer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aula01/public/pages/room/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/aula01/public/pages/room/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/aula01/public/pages/room/src/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/aula01/public/pages/room/src/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/aula01/public/pages/room/src/business.js" beforeDir="false" afterPath="$PROJECT_DIR$/aula01/public/pages/room/src/business.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/aula01/public/pages/room/src/view.js" beforeDir="false" afterPath="$PROJECT_DIR$/aula01/public/pages/room/src/view.js" afterDir="false" />
@@ -15,6 +18,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1ncJKKYPRVHAC5NvsyEdLnHytGX" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -37,7 +43,7 @@
       <option name="presentableId" value="Default" />
       <updated>1611683380668</updated>
       <workItem from="1611683381786" duration="6826000" />
-      <workItem from="1611748999092" duration="1572000" />
+      <workItem from="1611748999092" duration="7506000" />
     </task>
     <servers />
   </component>
