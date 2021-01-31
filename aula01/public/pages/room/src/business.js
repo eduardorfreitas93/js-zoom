@@ -12,6 +12,7 @@ class Business {
         this.currentPeer = {}
 
         this.peers = new Map()
+        this.usersRecordings = new Map()
     }
 
     static initialize(deps) {
@@ -20,6 +21,9 @@ class Business {
     }
 
     async _init() {
+        // precisa passar o .bind porque a função não é uma clouser, então eu preciso pegar o context (this) da business
+        this.view.configureRecordButton(this.onRecordPressed.bind(this))
+
         this.currentStream = await this.media.getCamera()
 
         this.socket = this.socketBuilder
@@ -27,17 +31,28 @@ class Business {
           .setOnUserDisconnected(this.onUserDisconnected())
           .build()
 
+      // não precisa passar o .bind porque as funções são clouser
         this.currentPeer = await this.peerBuilder
           .setOnError(this.onPeerError())
           .setOnConnectionOpened(this.onPeerConnectionOpened())
           .setOnCallReceived(this.onPeerCallReceived())
           .setOnPeerStreamRecived(this.onPeerStreamRecived())
+          .setOnCallError(this.onPeerCallError())
+          .setOnCallClose(this.onPeerCallClose())
           .build()
 
-        this.addVideoStream('test01')
+        this.addVideoStream(this.currentPeer.id)
     }
 
     addVideoStream(userId, stream = this.currentStream) {
+        const recorderInstance = new Recorder(userId, stream)
+
+        this.usersRecordings.set(recorderInstance.filename, recorderInstance)
+
+        if (this.recordingEnable) {
+          recorderInstance.startRecording()
+        }
+
         const isCurrentId = false
         this.view.renderVideo({
             userId,
@@ -48,7 +63,7 @@ class Business {
     }
 
     // closure func
-    onUserConnected = function() {
+    onUserConnected() {
         return userId => {
             console.log('user connected!', userId)
             // Toda vez que um usuario se conectar no socket, todos os usuarios ligam para esse novo usuario
@@ -56,26 +71,34 @@ class Business {
         }
     }
 
-    onUserDisconnected = function() {
+    onUserDisconnected() {
         return userId => {
             console.log('user disconnected!', userId)
+
+          if (this.peers.has(userId)) {
+            this.peers.get(userId).call.close()
+            this.peers.delete(userId)
+          }
+
+          this.view.setParticipants(this.peers.size)
+          this.view.removerVideoElement(userId)
         }
     }
 
-    onPeerError = function () {
+    onPeerError () {
       return error => {
         console.error('error on peer', error);
       }
     }
 
-    onPeerConnectionOpened = function () {
+    onPeerConnectionOpened () {
       return peer => {
         const id = peer.id
         this.socket.emit('join-room', this.room, id)
       }
     }
 
-    onPeerCallReceived = function () {
+    onPeerCallReceived () {
         return call => {
           console.log('answering call', call);
           // Responder call, quando alguem ligar, ele responde com o stream do video
@@ -84,7 +107,7 @@ class Business {
     }
 
     // Quando ele recebe o stream de video/audio ele add o video na tela
-    onPeerStreamRecived = function () {
+    onPeerStreamRecived () {
       return (call, stream) => {
         const callerId = call.peer
         this.addVideoStream(callerId, stream)
@@ -94,4 +117,48 @@ class Business {
         this.view.setParticipants(this.peers.size)
       }
     }
+
+  onPeerCallError() {
+      return (call, error) => {
+        console.log('an call error ocurred!', error);
+        this.view.removerVideoElement(call.peer)
+      }
+  }
+
+  onPeerCallClose() {
+    return (call) => {
+      console.log('an call close!');
+    }
+  }
+
+  onRecordPressed(recordingEnable) {
+      this.recordingEnable = recordingEnable
+    console.log('pressionou', recordingEnable)
+
+    for(const [key, value] of this.usersRecordings) {
+      if (this.recordingEnable) {
+        value.startRecording()
+        continue;
+      }
+      this.stopRecordig(key)
+    }
+  }
+
+  // se um usuario entrar e sair da call durante uma gravação precisamos parar as gravações anteriores dele
+  async stopRecordig(userId) {
+      const usersRecording = this.usersRecordings
+
+    for (const [key, value] of usersRecording) {
+      const isContextUser = key.includes(userId)
+
+      if(!isContextUser) continue;
+
+      const rec = value
+      const isRecordingActive = rec.recordingActive
+
+      if(!isRecordingActive) continue;
+
+      await rec.stopRecordig()
+    }
+  }
 }
