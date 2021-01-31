@@ -23,6 +23,7 @@ class Business {
     async _init() {
         // precisa passar o .bind porque a função não é uma clouser, então eu preciso pegar o context (this) da business
         this.view.configureRecordButton(this.onRecordPressed.bind(this))
+        this.view.configureLeaveBtnButton(this.onLeavePressed.bind(this))
 
         this.currentStream = await this.media.getCamera()
 
@@ -53,10 +54,9 @@ class Business {
           recorderInstance.startRecording()
         }
 
-        const isCurrentId = false
+        const isCurrentId = userId === this.currentPeer.id
         this.view.renderVideo({
             userId,
-            muted: true,
             stream,
             isCurrentId
         })
@@ -81,6 +81,7 @@ class Business {
           }
 
           this.view.setParticipants(this.peers.size)
+          this.stopRecordig(userId)
           this.view.removerVideoElement(userId)
         }
     }
@@ -110,6 +111,9 @@ class Business {
     onPeerStreamRecived () {
       return (call, stream) => {
         const callerId = call.peer
+
+        if (this.peers.has(callerId)) return;
+
         this.addVideoStream(callerId, stream)
 
         this.peers.set(callerId, { call })
@@ -144,6 +148,11 @@ class Business {
     }
   }
 
+  onLeavePressed() {
+      console.log('pressionou');
+      this.usersRecordings.forEach((value, key) => value.download())
+  }
+
   // se um usuario entrar e sair da call durante uma gravação precisamos parar as gravações anteriores dele
   async stopRecordig(userId) {
       const usersRecording = this.usersRecordings
@@ -159,6 +168,16 @@ class Business {
       if(!isRecordingActive) continue;
 
       await rec.stopRecordig()
+      this.playRecordings(key)
     }
+  }
+
+  playRecordings(userId) {
+      const user = this.usersRecordings.get(userId)
+    const videosURLs = user.getAllVideoURLs()
+
+    videosURLs.map(url => {
+      this.view.renderVideo({ url, userId })
+    })
   }
 }

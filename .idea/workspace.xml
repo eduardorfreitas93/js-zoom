@@ -2,12 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4426bf89-2f0a-4f9f-90db-a56be11ce0ab" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/aula01/public/pages/room/src/util/recorder.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aula01/public/pages/room/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/aula01/public/pages/room/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aula01/public/pages/room/src/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/aula01/public/pages/room/src/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/aula01/public/pages/room/src/business.js" beforeDir="false" afterPath="$PROJECT_DIR$/aula01/public/pages/room/src/business.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aula01/public/pages/room/src/util/peer.js" beforeDir="false" afterPath="$PROJECT_DIR$/aula01/public/pages/room/src/util/peer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aula01/public/pages/room/src/util/media.js" beforeDir="false" afterPath="$PROJECT_DIR$/aula01/public/pages/room/src/util/media.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aula01/public/pages/room/src/util/recorder.js" beforeDir="false" afterPath="$PROJECT_DIR$/aula01/public/pages/room/src/util/recorder.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/aula01/public/pages/room/src/view.js" beforeDir="false" afterPath="$PROJECT_DIR$/aula01/public/pages/room/src/view.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -51,11 +49,17 @@
       <workItem from="1611683381786" duration="6826000" />
       <workItem from="1611748999092" duration="7769000" />
       <workItem from="1611777119493" duration="88000" />
-      <workItem from="1612115215830" duration="7274000" />
+      <workItem from="1612115215830" duration="10293000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="606" y="218" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1612124442387">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state x="606" y="218" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1200/-3008.-276.3008.1692@0.0.1920.1200" timestamp="1612124442387" />
   </component>
 </project>

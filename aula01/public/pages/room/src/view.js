@@ -1,6 +1,7 @@
 class View {
     constructor() {
       this.recorderBtn = document.getElementById("record")
+      this.leaveBtn = document.getElementById("leave")
     }
 
     createVideoElement({ muted = true, src, srcObject }) {
@@ -22,8 +23,12 @@ class View {
         return video
     }
 
-    renderVideo({ userId, stream = null, url = null, isCurrentId = false, muted = true }) {
-        const video = this.createVideoElement({ muted, src: url, srcObject: stream })
+    renderVideo({ userId, stream = null, url = null, isCurrentId = false }) {
+        const video = this.createVideoElement({
+          muted: isCurrentId,
+          src: url,
+          srcObject: stream,
+        })
         this.appendToHTMLTree(userId, video, isCurrentId)
     }
 
@@ -67,7 +72,21 @@ class View {
       }
     }
 
+  onLeaveClick(command) {
+    return async () => {
+      command()
+
+      await Util.sleep(1000)
+
+      window.location = '/pages/home'
+    }
+  }
+
     configureRecordButton(command) {
       this.recorderBtn.addEventListener('click', this.onRecordClick(command))
+    }
+
+    configureLeaveBtnButton(command) {
+      this.leaveBtn.addEventListener('click', this.onLeaveClick(command))
     }
 }
